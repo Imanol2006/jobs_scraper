@@ -446,4 +446,4 @@ output:
   # that means sources broke, not that the market emptied out.
   min_jobs_to_publish: 500
   # Owner name shown in the page header. Cosmetic.
-  owner: "Aadi's job board"
+  owner: "Imanol's job board"
