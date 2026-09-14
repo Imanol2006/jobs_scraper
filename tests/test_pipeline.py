@@ -166,11 +166,15 @@ def _job(**kw):
     return {**base, **kw}
 
 
-def test_frontier_lab_ml_role_outranks_generic_swe(scorer):
+def test_core_swe_role_outranks_offprofile_research_role(scorer):
+    # This fork's profile.yaml targets broad software engineering first (Google
+    # /Microsoft/Bloomberg-style roles), with AI/ML as a strong second interest
+    # — not niche interpretability research, which role_penalties intentionally
+    # docks. So a plain SWE role should outrank it, not the reverse.
     lab = scorer.score(_job(title="Research Engineer, Interpretability",
                             company_name="Anthropic", employer_tier="frontier_lab"))
     generic = scorer.score(_job(title="Software Engineer", company_name="Some Bank"))
-    assert lab.score > generic.score
+    assert generic.score > lab.score
     assert any("Frontier" in r for r in lab.reasons)
 
 
@@ -214,12 +218,15 @@ def test_skills_overlap_raises_score(scorer):
     assert any("stack:" in r for r in rich.reasons)
 
 
-def test_new_grad_outranks_intern_all_else_equal(scorer):
+def test_intern_outranks_new_grad_all_else_equal(scorer):
+    # This fork's profile.yaml sets stage.new_grad=0 on purpose: the candidate
+    # is intern-only (sophomore, not graduating soon), so intern roles should
+    # rank above new-grad roles, not below.
     ng = scorer.score(_job(title="Machine Learning Engineer", company_name="OpenAI",
                            employer_tier="frontier_lab", role_type="new_grad"))
     intern = scorer.score(_job(title="Machine Learning Engineer", company_name="OpenAI",
                                employer_tier="frontier_lab", role_type="intern"))
-    assert ng.score > intern.score
+    assert intern.score > ng.score
 
 
 def test_score_is_clamped_to_0_100(scorer):
