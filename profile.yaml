@@ -330,12 +330,14 @@ stage:
   target_years: [2028, 2029]
   target_year_bonus: 3
   penalties:
-    phd: 8
-    masters: 4
+    phd: 35
+    masters: 30
     years_3plus: 12
   flag_keywords:
-    phd: ["ph.d", "phd", "doctorate", "doctoral"]
-    masters: ["master's degree", "masters degree", "ms degree", "m.s. degree"]
+    phd: ["ph.d", "phd", "doctorate", "doctoral", ", phd,", "(phd)"]
+    masters: ["master's degree", "masters degree", "ms degree", "m.s. degree",
+              ", ms,", "(ms)", "intern, ms", "master's", "masters student",
+              "currently pursuing a master"]
     clearance: ["security clearance", "ts/sci", "top secret", "polygraph"]
     citizenship: ["us citizen", "u.s. citizen", "citizenship required"]
 
